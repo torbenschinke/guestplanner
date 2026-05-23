@@ -116,7 +116,7 @@ func main() {
 						Frame(ui.Frame{Width: "100%", Height: "20rem", MaxWidth: "60rem"}),
 
 					ui.VStack(
-						ui.HStack(ui.Text(cfg.AnonWelcomeText)).BackgroundColor(ui.ColorWhite).
+						ui.HStack(ui.Text(cfg.AnonWelcomeText)).BackgroundColor(ui.M4).
 							Border(ui.Border{}.Radius(ui.L32).Shadow(ui.L16)).
 							Padding(ui.Padding{}.All(ui.L32)).
 							Frame(ui.Frame{Width: "100%", MaxWidth: "30rem"}),
@@ -276,7 +276,7 @@ func main() {
 								).FullWidth().Gap(ui.L8),
 							).FullWidth()
 						}(),
-					).BackgroundColor(ui.ColorWhite).
+					).BackgroundColor(ui.M4).
 						FullWidth().
 						Gap(ui.L16).
 						Alignment(ui.Leading).
