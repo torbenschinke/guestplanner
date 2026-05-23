@@ -5,12 +5,12 @@ type Guest struct {
 	ID               ID `visible:"false"`
 	Name             string
 	Single           bool
-	Salutation       string
-	RegistrationCode string
-	Adults           int `value:"\"1\""`
-	Children         int
+	Salutation       string `label:"Anrede"`
+	RegistrationCode string `label:"Anmeldecode" supportingText:"Beim erstmaligen Erstellen Feld leerlassen und der Code wird automatisch vergeben."`
+	Adults           int    `value:"\"1\"" label:"Anzahl Erwachsene"`
+	Children         int    `value:"\"0\"" label:"Anzahl Kinder"`
 	Status           Status `values:"[\"wartet\",\"angenommen\",\"abgesagt\"]"`
-	Invited          bool
+	Invited          bool   `label:"Einladung (SMS) versendet"`
 }
 
 func (g Guest) WithIdentity(id ID) Guest {

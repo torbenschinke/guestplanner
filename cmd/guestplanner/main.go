@@ -24,6 +24,7 @@ import (
 	"go.wdy.de/nago/presentation/ui"
 	"go.wdy.de/nago/presentation/ui/alert"
 	"go.wdy.de/nago/presentation/ui/form"
+	"go.wdy.de/nago/web/ssr/cfgssr"
 	"go.wdy.de/nago/web/vuejs"
 )
 
@@ -61,7 +62,7 @@ func main() {
 				return ui.VStack(
 					view,
 					form.Card(
-						ui.H2("Einladungstext"),
+						ui.H2("Einladung (SMS)"),
 						ui.HStack(ui.SecondaryButton(func() {
 							wnd.Clipboard().SetText(text)
 						}).PreIcon(icons.Clipboard)).FullWidth().Alignment(ui.Trailing),
@@ -88,6 +89,8 @@ func main() {
 				return uc
 			},
 		}))
+
+		cfgssr.Enable(cfg, ".")
 
 		cfg.RootView(".", func(wnd core.Window) core.View {
 			cfg := core.GlobalSettings[GuestPlannerSettings](wnd)
@@ -128,7 +131,7 @@ func main() {
 			}
 
 			text = strings.ReplaceAll(text, "$SALUTATION", mGuest.Salutation)
-			registerDuration := xtime.Now().Time(time.Local).Sub(cfg.Deadline.Time(time.Local))
+			registerDuration := cfg.Deadline.Time(time.Local).Sub(xtime.Now().Time(time.Local))
 			canRegister := registerDuration > 0
 
 			adults := core.AutoState[int64](wnd).Init(func() int64 {
@@ -196,7 +199,7 @@ func main() {
 						ui.Text(text),
 
 						ui.Space(ui.L32),
-						ui.H2("Verbindliche Anmeldung"),
+						ui.H2("Anmeldung"),
 						func() core.View {
 							if !canRegister || mGuest.Status != guest.StatusWaiting {
 								var stateText string
@@ -289,15 +292,15 @@ type GuestPlannerSettings struct {
 	GuestLandingPageTitle    string
 	Banner                   image.ID
 	AnonWelcomeText          string     `lines:"5"`
-	RegistrationTitle        string     `section:"Anmeldung" label:"Title"`
-	DateAndTime              string     `section:"Anmeldung" label:"Wann"`
-	Location                 string     `section:"Anmeldung" label:"Wo"`
-	Deadline                 xtime.Date `section:"Anmeldung" label:"Anmeldeschluss"`
-	SingleRegistrationText   string     `section:"Anmeldung" lines:"5" label:"Text Einzelanmeldung" supportingText:"Unterstützt wird der Platzhalter $SALUTATION für die Anrede."`
-	MultipleRegistrationText string     `section:"Anmeldung" lines:"5" label:"Text Mehrfachanmeldung"`
+	RegistrationTitle        string     `section:"Anmeldung Web" label:"Title"`
+	DateAndTime              string     `section:"Anmeldung Web" label:"Wann"`
+	Location                 string     `section:"Anmeldung Web" label:"Wo"`
+	Deadline                 xtime.Date `section:"Anmeldung Web" label:"Anmeldeschluss"`
+	SingleRegistrationText   string     `section:"Anmeldung Web" lines:"5" label:"Text Einzelanmeldung" supportingText:"Unterstützt wird der Platzhalter $SALUTATION für die Anrede."`
+	MultipleRegistrationText string     `section:"Anmeldung Web" lines:"5" label:"Text Mehrfachanmeldung"`
 
-	SinglePlannerInvitationText string `section:"Einladung" label:"Text Einladung Einzel" lines:"5" supportingText:"Unterstützt werden die Platzhalter $CODE für den Registrierungscode, $LINK für den Registrierungslink und $SALUTATION für die Anrede."`
-	MultiPlannerInvitationText  string `section:"Einladung" label:"Text Einladung Mehrfach" lines:"5" `
+	SinglePlannerInvitationText string `section:"Einladung (SMS)" label:"Text Einladung Einzel" lines:"5" supportingText:"Unterstützt werden die Platzhalter $CODE für den Registrierungscode, $LINK für den Registrierungslink und $SALUTATION für die Anrede."`
+	MultiPlannerInvitationText  string `section:"Einladung (SMS)" label:"Text Einladung Mehrfach" lines:"5" `
 }
 
 func (g GuestPlannerSettings) GlobalSettings() bool {
