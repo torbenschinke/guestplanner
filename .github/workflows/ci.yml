@@ -20,7 +20,7 @@ jobs:
 
       - name: Build go-binary
         run: |
-          GOOS=linux GOARCH=amd64 go build -o srv github.com/torbenschinke/guestplanner/cmd/tanzliste
+          GOOS=linux GOARCH=amd64 go build -o srv github.com/torbenschinke/guestplanner/cmd/guestplanner
 
       - name: Upload site via curl
         run: |
