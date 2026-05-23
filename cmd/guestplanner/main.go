@@ -33,7 +33,11 @@ func main() {
 		cfg.Serve(vuejs.Dist())
 
 		option.MustZero(cfg.StandardSystems())
-		option.Must(option.Must(cfg.UserManagement()).UseCases.EnableBootstrapAdmin(time.Now().Add(time.Hour), "%6UbRsdfg4dM8N$auy"))
+		modUser := option.Must(cfg.UserManagement())
+		if option.Must(modUser.UseCases.CountUsers()) == 0 {
+			option.Must(modUser.UseCases.EnableBootstrapAdmin(time.Now().Add(time.Hour), "%6UbRsdfg4dM8N$auy"))
+		}
+
 		cfg.SetDecorator(cfg.NewScaffold().Decorator())
 		option.Must(cfginspector.Enable(cfg))
 		option.Must(cfg.SettingsManagement())
