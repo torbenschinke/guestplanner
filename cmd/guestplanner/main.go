@@ -201,9 +201,9 @@ func main() {
 						ui.IfFunc(mGuest.HotelOption, func() core.View {
 							return ui.VStack(
 								ui.Space(ui.L32),
-								ui.H2("Hotel"),
+								ui.H2("Übernachtung"),
 								ui.Text(cfg.HotelText),
-							)
+							).FullWidth().Alignment(ui.Leading)
 						}),
 
 						ui.Space(ui.L32),
