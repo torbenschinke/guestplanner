@@ -1,0 +1,33 @@
+name: Build nago App
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.26'
+
+
+      - name: Build go-binary
+        run: |
+          GOOS=linux GOARCH=amd64 go build -o srv github.com/torbenschinke/guestplanner/cmd/tanzliste
+
+      - name: Upload site via curl
+        run: |
+          set -e
+          curl -v -X POST https://nago.app/api/v1/application/build \
+            -H "Authorization: Bearer $UPLOAD_TOKEN" \
+            -F "file=@srv" \
+            -F "info={\"app\":\"28b35f77891a0c08f5a55ec829b26d71\", \"version\":{\"major\":0, \"minor\":0, \"patch\":0}, \"vcs\":{\"commit\":\"$GITHUB_SHA\", \"branch\":\"$GITHUB_REF_NAME\", \"tag\":\"$GITHUB_REF_NAME\"}};type=application/json"
+        env:
+          UPLOAD_TOKEN: ${{ secrets.UPLOAD_TOKEN }}
