@@ -5,6 +5,7 @@ type Guest struct {
 	ID               ID `visible:"false"`
 	Name             string
 	Single           bool
+	HotelOption      bool
 	Salutation       string `label:"Anrede"`
 	RegistrationCode string `label:"Anmeldecode" supportingText:"Beim erstmaligen Erstellen Feld leerlassen und der Code wird automatisch vergeben."`
 	Adults           int    `value:"\"1\"" label:"Anzahl Erwachsene"`

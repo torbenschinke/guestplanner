@@ -198,6 +198,14 @@ func main() {
 						ui.H2("Details"),
 						ui.Text(text),
 
+						ui.IfFunc(mGuest.HotelOption, func() core.View {
+							return ui.VStack(
+								ui.Space(ui.L32),
+								ui.H2("Hotel"),
+								ui.Text(cfg.HotelText),
+							)
+						}),
+
 						ui.Space(ui.L32),
 						ui.H2("Anmeldung"),
 						func() core.View {
@@ -298,6 +306,7 @@ type GuestPlannerSettings struct {
 	Deadline                 xtime.Date `section:"Anmeldung Web" label:"Anmeldeschluss"`
 	SingleRegistrationText   string     `section:"Anmeldung Web" lines:"5" label:"Text Einzelanmeldung" supportingText:"Unterstützt wird der Platzhalter $SALUTATION für die Anrede."`
 	MultipleRegistrationText string     `section:"Anmeldung Web" lines:"5" label:"Text Mehrfachanmeldung"`
+	HotelText                string     `section:"Anmeldung Web" lines:"5" label:"Text Hotel"`
 
 	SinglePlannerInvitationText string `section:"Einladung (SMS)" label:"Text Einladung Einzel" lines:"5" supportingText:"Unterstützt werden die Platzhalter $CODE für den Registrierungscode, $LINK für den Registrierungslink und $SALUTATION für die Anrede."`
 	MultiPlannerInvitationText  string `section:"Einladung (SMS)" label:"Text Einladung Mehrfach" lines:"5" `
