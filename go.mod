@@ -24,9 +24,9 @@ require (
 	github.com/worldiety/jsonptr v0.0.7 // indirect
 	github.com/worldiety/material-color-utilities v0.0.0-20250324124753-a84b74640c16 // indirect
 	github.com/yuin/goldmark v1.7.13 // indirect
-	golang.org/x/crypto v0.45.0 // indirect
+	golang.org/x/crypto v0.51.0 // indirect
 	golang.org/x/image v0.33.0 // indirect
-	golang.org/x/net v0.47.0 // indirect
-	golang.org/x/sys v0.38.0 // indirect
-	golang.org/x/text v0.31.0 // indirect
+	golang.org/x/net v0.55.0 // indirect
+	golang.org/x/sys v0.45.0 // indirect
+	golang.org/x/text v0.37.0 // indirect
 )
